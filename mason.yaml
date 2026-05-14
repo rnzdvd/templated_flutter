@@ -1,0 +1,28 @@
+# Register bricks which can be consumed via the Mason CLI.
+# Run "mason get" to install all registered bricks.
+# Run "mason make <brick_name>" to generate files from a brick.
+# To learn more, visit https://docs.brickhub.dev.
+# mason.yaml in the root directory
+bricks:
+  component:
+    path: _templates/component
+  container:
+    path: _templates/container
+  controller:
+    path: _templates/controller
+  entity:
+    path: _templates/entity
+  repository:
+    path: _templates/repository
+  presenter:
+    path: _templates/presenter
+  screen:
+    path: _templates/screen
+  usecase:
+    path: _templates/usecase
+  store:
+    path: _templates/store
+  form:
+    path: _templates/form
+  dto:
+    path: _templates/dto

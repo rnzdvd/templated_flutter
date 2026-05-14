@@ -1,0 +1,26 @@
+# _templates/component/brick.yaml
+
+# Version and environment
+version: 0.1.0+1
+
+# Define the Mason version the brick supports
+environment:
+  mason: ^0.1.1
+
+# Metadata about the brick
+name: form
+description: A Form Input template.
+
+# Variables used in the template
+vars:
+  module_name:
+    type: string
+    description: The name of the module.
+    prompt: What is the name of the module?
+    default: module
+
+  form_name:
+    type: string
+    description: The name of the form.
+    prompt: What is the name of the form?
+    default: form

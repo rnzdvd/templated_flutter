@@ -1,0 +1,25 @@
+# _templates/api_model/brick.yaml
+
+# Version and environment
+version: 0.1.0+1
+
+# Define the Mason version the brick supports
+environment:
+  mason: ^0.1.1
+
+# Metadata about the brick
+name: dto
+description: A dto model template
+
+vars:
+  module_name:
+    type: string
+    description: The name of the module.
+    prompt: What is the name of the module?
+    default: module
+
+  dto_name:
+    type: string
+    description: The name of the api model.
+    prompt: What is the name of the api model?
+    default: dto_name

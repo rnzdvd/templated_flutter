@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"C:\\\\Projects\\\\templated_flutter\" -Recurse -Force)",
+      "Bash(Select-Object -ExpandProperty FullName)",
+      "Bash(flutter pub *)",
+      "Bash(node \"C:\\\\Projects\\\\templated_flutter\\\\bin\\\\scaffold.js\")",
+      "Bash(Remove-Item \"C:\\\\Projects\\\\templated_flutter\\\\package.json\" -Force)",
+      "Bash(Remove-Item \"C:\\\\Projects\\\\templated_flutter\\\\bin\\\\scaffold.js\" -Force)",
+      "Bash(dart run *)"
+    ]
+  }
+}
