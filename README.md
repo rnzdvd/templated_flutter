@@ -84,7 +84,12 @@ mason get
 
 # 3. Install Flutter dependencies
 # Windows PowerShell:
-.\install_packages.ps1
+#   .\install_packages.ps1
+#
+# macOS:
+#   1. Install PowerShell first: brew install --cask powershell
+#   2. Then run: pwsh install_packages.ps1
+#
 # or manually: flutter pub add mobx flutter_mobx reactive_forms ...
 
 # 4. Run code generation
