@@ -241,4 +241,42 @@ class FooScreen extends StatelessWidget {
 
 **Container Observer rule** — the Container's `build` method must wrap its return in `Observer(builder: (_) => ...)` from `flutter_mobx`. This ensures reactive rebuilds when MobX observables change.
 
+**Container controller/presenter declaration rule** — every Container is a `StatefulWidget`; its `State` declares `store`, `controller`, and `presenter` as `late final` fields and assigns them in `initState`, in that order (`store` first, since controller/presenter both depend on it):
+
+```dart
+class _FooContainerState extends State<FooContainer> {
+  late final Store store;
+  late final FooController controller;
+  late final FooPresenter presenter;
+
+  @override
+  void initState() {
+    super.initState();
+    store = GetIt.instance<Store>();
+    controller = FooController(store: store);
+    presenter = FooPresenter(store: store);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Observer(
+      builder: (_) => FooView(
+        isLoading: presenter.isLoading,
+        onSubmit: controller.submit,
+      ),
+    );
+  }
+}
+```
+
+Rules that apply to this pattern:
+- Resolve `Store` from `GetIt.instance<Store>()` — never construct a `Store()` directly or accept it as a widget constructor parameter.
+- `controller` and `presenter` are non-nullable `late final` fields, always assigned in `initState`, never lazily created inside `build` or inside the `Observer` builder (re-instantiating them on every rebuild would drop controller-held state such as in-flight use cases).
+- Field names are `store`, `controller`, `presenter` — no leading underscore. They're read only within the same `State` class, but the plain name keeps generated code consistent across containers.
+- The Container itself must never read `store` fields directly (e.g. `store.authStore.isLoading`) — all reads go through `presenter` getters, all writes go through `controller` methods, per the Single Store parameter rule and Controller getter rule above.
+- If a Container also owns a `FormGroup` (see reactive_forms pattern above), declare it as its own `late final` field alongside `store`/`controller`/`presenter` and initialize it in the same `initState`, after `store` is assigned.
+- `dispose()` does not need to null these fields out; only close/dispose objects that own resources (e.g. `_form.dispose()` if applicable).
+
+**Single controller/presenter per container rule** — a Container may declare exactly one `controller` field and exactly one `presenter` field, each typed to exactly one Controller class and one Presenter class. Never declare a second controller/presenter, and never call methods or getters from a different module's controller/presenter inside a Container. If a screen needs to orchestrate more than one module's use cases or reads, that composition belongs in the Screen (composing multiple Containers, each with its own single controller/presenter) — not inside one Container. If a single module's Controller or Presenter is growing unwieldy, split the module's use cases/getters further within that same Controller/Presenter rather than adding a second one to the Container.
+
 **Context7** — always use Context7 MCP to fetch current library/API documentation instead of relying on training data. This applies to setup questions, code generation, API references, and anything involving specific packages.

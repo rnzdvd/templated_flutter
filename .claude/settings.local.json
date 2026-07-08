@@ -16,5 +16,11 @@
       "Read(//Users/renz/.pub-cache/**)",
       "Bash(flutter --version)"
     ]
-  }
+  },
+  "disabledMcpjsonServers": [
+    "context7",
+    "sentry",
+    "github",
+    "figma"
+  ]
 }
