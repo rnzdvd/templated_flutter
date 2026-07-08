@@ -1,6 +1,6 @@
 # Step 1: Write pubspec.yaml with 'any' to let pub resolve latest versions
 $dependencies = @("cupertino_icons", "get_it", "go_router", "toastification", "envied", "dio", "logger", "mobx", "flutter_mobx", "reactive_forms", "flutter_secure_storage", "freezed_annotation", "json_annotation")
-$devDependencies = @("flutter_lints", "build_runner", "envied_generator", "json_serializable", "mobx_codegen", "freezed")
+$devDependencies = @("flutter_lints", "build_runner", "envied_generator", "json_serializable", "mobx_codegen", "freezed", "test", "mocktail")
 
 $pubspecAny = @'
 name: templated_flutter

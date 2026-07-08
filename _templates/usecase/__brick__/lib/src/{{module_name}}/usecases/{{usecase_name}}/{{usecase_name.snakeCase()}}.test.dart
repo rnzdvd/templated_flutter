@@ -1,4 +1,5 @@
 import 'package:test/test.dart';
+import 'package:{{package_name}}/core/services/api.gateway.mock.dart';
 import 'package:{{package_name}}/store.dart';
 
 import '{{usecase_name.snakeCase()}}.case.dart';
@@ -8,6 +9,7 @@ void main() {
     late {{usecase_name.pascalCase()}}Case useCase;
 
     final store = Store();
+    final apiGateway = apiMockGateway();
 
     setUp(() {
       useCase = {{usecase_name.pascalCase()}}Case();
