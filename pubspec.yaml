@@ -27,6 +27,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  test: ^1.25.15
+  mocktail: ^1.0.4
   flutter_lints: ^5.0.0
   build_runner: ^2.5.4
   envied_generator: ^1.1.1

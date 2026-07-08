@@ -7,7 +7,14 @@
       "Bash(node \"C:\\\\Projects\\\\templated_flutter\\\\bin\\\\scaffold.js\")",
       "Bash(Remove-Item \"C:\\\\Projects\\\\templated_flutter\\\\package.json\" -Force)",
       "Bash(Remove-Item \"C:\\\\Projects\\\\templated_flutter\\\\bin\\\\scaffold.js\" -Force)",
-      "Bash(dart run *)"
+      "Bash(dart run *)",
+      "Bash(mkdir -p \"/Volumes/KingstonNVME/Projects/templated_flutter/_templates/usecase/hooks\")",
+      "Bash(mkdir -p \"/Volumes/KingstonNVME/Projects/templated_flutter/_templates/usecase/__brick__/test/src/{{module_name}}/usecases/{{usecase_name}}\")",
+      "Bash(mason get *)",
+      "Bash(mason make *)",
+      "Bash(dart --version)",
+      "Read(//Users/renz/.pub-cache/**)",
+      "Bash(flutter --version)"
     ]
   }
 }
