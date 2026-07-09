@@ -199,6 +199,23 @@ For each generated file, follow these rules:
 | Internal handler (not a prop)         | `_handle`                 | `_handleLogin`, `_handleDelete`       |
 | Navigation function in a Screen       | `navigateTo<Destination>` | `navigateToHome`, `navigateToProfile` |
 
+## Phase 5: Mock Data Cleanup
+
+**Gate:** Only remove mock data once the API is confirmed wired and working end-to-end. Never delete mock data speculatively or as part of implementing the wiring itself.
+
+1. **Verify first, then clean up.** Treat wiring as "successfully implemented" only when all of the following hold:
+   - `flutter analyze` passes with no new errors on the touched files.
+   - `melos run build` completed without error if a store/DTO/form/entity changed.
+   - The Container calls the real `controller` method and reads results via the real `presenter` getters (not a stubbed/local value).
+   - The data flow traces cleanly: Gateway → UseCase → Repository → Store → Presenter → Container → View, with no remaining shortcut back to a mock.
+   - Ideally, the flow has been run (`flutter run` / existing test) and observed to load real data — if that can't be verified, say so explicitly rather than assuming success.
+2. **Locate mock data tied to this feature.** Search only within the module(s) just wired — hardcoded lists/maps in the View or Container, `Future.delayed` fake-latency stubs, static fixture files, dummy default values on entities that exist solely to simulate the API, or commented-out real calls left behind from a mock phase.
+3. **Remove only what the real API now replaces.** Delete the mock data source and any now-dead imports/helpers it needed. Do not touch:
+   - Mock data belonging to other, still-unwired features.
+   - Fallback/default values on entities that are legitimate initial state (e.g., `bool isLoading = false`), not simulated API data.
+   - Fixtures used by tests, unless the test itself is being updated to hit the real flow.
+4. **If verification fails or is inconclusive,** leave the mock data in place, report which check failed, and stop — do not remove mocks "optimistically" while wiring is still uncertain.
+
 ---
 
 ## Checklist for Claude
@@ -218,3 +235,6 @@ For each generated file, follow these rules:
 - [ ] Controller exposes no getters and returns no data — data reads belong in the Presenter.
 - [ ] Props callbacks use `on` prefix; internal handlers use `_handle` prefix.
 - [ ] Navigation functions in Screens use `navigateTo<Destination>` prefix.
+- [ ] Mock data for this feature is removed only after confirming: `flutter analyze` passes, codegen ran if needed, and the Container/View demonstrably read real data through Controller → Presenter.
+- [ ] Mock data belonging to other unwired features, legitimate default state, and test fixtures were left untouched.
+- [ ] If wiring could not be verified as working, mock data was left in place and the blocker was reported instead of removing it speculatively.
